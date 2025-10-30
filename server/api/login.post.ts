@@ -28,17 +28,19 @@ export default defineEventHandler(async (event) => {
         const token = 'fake.jwt.token'
 
         setCookie(event, 'token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
+            // httpOnly: true,
+            // secure: process.env.NODE_ENV === 'production',
+            // sameSite: 'lax',
             path: '/',
             maxAge: 60 * 60 * 24, // 1 วัน
         })
 
+
+
         setCookie(event, 'userInfo', JSON.stringify(user), {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
+            // httpOnly: true,
+            // secure: process.env.NODE_ENV === 'production',
+            // sameSite: 'lax',
             path: '/',
             maxAge: 60 * 60 * 24, // 1 วัน
         })

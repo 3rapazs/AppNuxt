@@ -2,7 +2,7 @@
 import { reactive, onMounted, ref } from "vue";
 import Swal from "~/utility/Swal";
 import SwalModel from "~/model/shared/swalModel";
-const { ApiPost } = useGetData();
+const { ApiPost } = useApi();
 
 definePageMeta({
   layout: "empty",

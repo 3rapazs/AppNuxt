@@ -4,9 +4,12 @@ import { useUser } from "../../composables/useUser";
 import userModel from "../../model/shared/user";
 import swal from "../../utility/swal";
 import swalModel from "../../model/shared/swalModel";
+import config from "../../config/ConfigSys";
+import IsLoading from "../../components/common/loading.vue";
 
 const sidebarOpen = ref(false);
 const dropdownOpen = ref(false);
+const isLoading = ref(false);
 const token = ref("");
 const user = ref<userModel>(new userModel());
 const { GetToken, GetUser, Logout } = useUser();
@@ -49,12 +52,15 @@ const subMenuList = [
 ];
 
 onMounted(async () => {
+  isLoading.value = true;
+
   token.value = await GetToken();
   user.value = await GetUser();
   menuList.value = menuLists.map((u) => ({
     ...u,
     items: subMenuList.filter((o) => o.menuId === u.menuId),
   }));
+  isLoading.value = false;
 });
 
 async function ClickLogOut() {
@@ -75,6 +81,9 @@ async function ClickLogOut() {
 </script>
 
 <template>
+  <div v-if="isLoading">
+    <IsLoading></IsLoading>
+  </div>
   <div>
     <div x-data="{ sidebarOpen: false }" class="flex h-screen bg-gray-200">
       <div
@@ -111,14 +120,51 @@ async function ClickLogOut() {
               ></path>
             </svg>
 
-            <span class="mx-2 text-2xl font-semibold text-white"
-              >Dashboard</span
-            >
+            <span class="mx-2 text-2xl font-semibold text-white">{{
+              config.AppName
+            }}</span>
           </div>
         </div>
 
         <nav class="mt-5">
           <ul class="menu w-full">
+            <div v-if="user.roleId === '1'">
+              <li>
+                <a
+                  class="flex items-center px-6 py-2 mt-1 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+                  href="#"
+                >
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+
+                  <span class="mx-3">ผู้ดูแลระบบ</span>
+                </a>
+                <ul>
+                  <a
+                    class="flex items-center px-6 py-0 mt-0 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+                    href="#"
+                  >
+                    <svg
+                      class="w-6 h-6"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                      ></path>
+                    </svg>
+
+                    <span class="mx-3">test</span>
+                  </a>
+                </ul>
+              </li>
+              <hr class="text-white mt-3" />
+            </div>
+
             <li v-for="(menu, index) in menuList" :key="index">
               <a
                 class="flex items-center px-6 py-2 mt-1 text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
@@ -232,10 +278,11 @@ async function ClickLogOut() {
                 class="btn btn-ghost btn-circle avatar"
               >
                 <div class="w-10 rounded-full">
-                  <img
+                  <!-- <img
                     alt="Tailwind CSS Navbar component"
                     src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  />
+                  /> -->
+                  <i class="fa fa-user-circle text-4xl" aria-hidden="true"></i>
                 </div>
               </div>
               <ul
@@ -243,15 +290,23 @@ async function ClickLogOut() {
                 class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a class="justify-between">
+                  <!-- <a class="justify-between"> -->
+                  <a class="">
                     <!-- Profile -->
-                    ผู้ใช้ระบบ [{{ user.userId }}]
+                    <i class="fa fa-user" aria-hidden="true"></i>[{{
+                      user.userId
+                    }}]
                     <!-- <span class="badge">New</span> -->
                   </a>
                 </li>
-                <li><a>Settings</a></li>
+
+                <!-- <li>
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  <a>Settings</a>
+                </li> -->
                 <li>
                   <button type="button" @click="ClickLogOut">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <a>Logout</a>
                   </button>
                 </li>
@@ -266,10 +321,14 @@ async function ClickLogOut() {
                     class="btn btn-ghost btn-circle avatar"
                   >
                     <div class="w-10 rounded-full">
-                      <img
+                      <!-- <img
                         alt="Tailwind CSS Navbar component"
                         src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                      />
+                      /> -->
+                      <i
+                        class="fa fa-sign-in pt-1 text-3xl"
+                        aria-hidden="true"
+                      ></i>
                     </div>
                   </div>
                 </a>

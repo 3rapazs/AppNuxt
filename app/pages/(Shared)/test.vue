@@ -4,6 +4,6 @@ definePageMeta({
 });
 </script>
 
-<template>Test</template>
+<template></template>
 
 <style scoped></style>

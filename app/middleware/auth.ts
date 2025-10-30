@@ -33,16 +33,20 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     if (publicPaths.includes(to.path)) return
 
     const token = useCookie('token')          // SSR-aware
+    const user = useCookie("userInfo")
+    console.log("users : " + user.value)
     console.log("token : " + token.value)
+    console.log(token)
     console.log(!token.value)
+
 
     if (!token.value) {
         const redirect = encodeURIComponent(to.fullPath)
-        return navigateTo(`/login?redirect=${redirect}`)
+        return navigateTo(`/login`)
     }
-    else {
-        return navigateTo(`/`)
-    }
+    // else {
+    //     return navigateTo(`/home`)
+    // }
 
 
 

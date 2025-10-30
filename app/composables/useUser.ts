@@ -1,7 +1,7 @@
 import userModel from "../model/shared/user"
 
 export function useUser() {
-    const { ApiPost } = useGetData()
+    const { ApiPost } = useApi()
 
     async function GetUser(): Promise<userModel> {
         const user: userModel = await ApiPost("api/getUser", null)

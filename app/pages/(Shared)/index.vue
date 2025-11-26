@@ -11,6 +11,6 @@ onMounted(async () => {
 });
 </script>
 
-<template>Home 2</template>
+<template></template>
 
 <style scoped></style>

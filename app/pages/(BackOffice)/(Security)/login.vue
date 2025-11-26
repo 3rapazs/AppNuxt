@@ -2,7 +2,7 @@
 import { reactive, onMounted, ref } from "vue";
 import Swal from "~/utility/Swal";
 import SwalModel from "~/model/shared/swalModel";
-const { ApiPost } = useApi();
+const { Login } = useUser();
 
 definePageMeta({
   layout: "empty",
@@ -18,7 +18,7 @@ const inputRef = ref<HTMLInputElement | null>(null);
 
 async function ClickLogIn() {
   const data = { username: model.username, password: model.password };
-  const res = await ApiPost("api/login", data);
+  const res = await Login(data);
   const swal: Swal = new Swal();
   const swalModel: SwalModel = new SwalModel();
   swalModel.title = res.message;

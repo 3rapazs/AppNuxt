@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import "../app/assets/css/main.css";
+import ConfigSys from "./config/ConfigSys";
 </script>
 
 <template>
   <div>
+    <title>{{ ConfigSys.AppName }}</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
@@ -13,9 +15,9 @@ import "../app/assets/css/main.css";
     />
     <NuxtLayout>
       <div class="">
-      <UApp>
-    <NuxtPage />
-  </UApp>
+        <UApp>
+          <NuxtPage />
+        </UApp>
       </div>
     </NuxtLayout>
   </div>
